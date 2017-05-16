@@ -1103,7 +1103,7 @@ function generate_main_block(block_count) {
                     feedback_string = "<span class='very-large'><br><font color='green'>Correct! (+" + curr_at_stake.toString() + ")</font></span>";
                     point_main += curr_at_stake;
                 }
-                let score_string = "You earned " + point_main.toString() + " points and have " +
+                let score_string = "In this block, you earned " + point_block.toString() + " points and have " +
                     (option_this.length - curr_main_hard - 1).toString() + " trials to go."
                 if (curr_probcate == "math") {
                     return "<div class = centerbox>" + practice_warning + "<p class = block-text>Fill in the <font color=blue>blue box</font> " +
