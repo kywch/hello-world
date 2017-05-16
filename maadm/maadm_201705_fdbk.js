@@ -1102,6 +1102,7 @@ function generate_main_block(block_count) {
                 if (curr_correct) {
                     feedback_string = "<span class='very-large'><br><font color='green'>Correct! (+" + curr_at_stake.toString() + ")</font></span>";
                     point_main += curr_at_stake;
+                    point_block += curr_at_stake;
                 }
                 let score_string = "In this block, you earned " + point_block.toString() + " points and have " +
                     (option_this.length - curr_main_hard - 1).toString() + " trials to go."
@@ -1133,7 +1134,6 @@ function generate_main_block(block_count) {
             },
             data: function() {
                 if (curr_correct) {
-                    point_block += curr_at_stake;
                     correct_block += 1;
                 }
                 let prob_id = problem_current.probid;
