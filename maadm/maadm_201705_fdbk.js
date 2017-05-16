@@ -798,7 +798,7 @@ for (var ii = 0; ii < option_practice.length; ii++) {
                 feedback_string = "<span class='very-large'><br><font color='green'>Correct! (+" + curr_at_stake.toString() + ")</font></span>";
                 point_prac += curr_at_stake;
             }
-            let score_string = "You earned " + point_prac.toString() + " points and have " +
+            let score_string = "In this block, you earned " + point_prac.toString() + " points and have " +
                 (option_practice.length - curr_prac_choice - 1).toString() + " trials to go."
             if (curr_probcate == "math") {
                 return "<div class = centerbox>" + practice_warning + "<p class = block-text>Fill in the <font color=blue>blue box</font> " +
