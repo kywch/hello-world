@@ -1204,7 +1204,8 @@ function generate_main_block(block_count, flag_feedback) {
                     prob_type: problem_current.type,
                     curr_stake: curr_at_stake,
                     correct: curr_correct,
-                    points: point_main
+                    points: point_main, 
+                    feedback: flag_feedback
                 };
             },
             on_finish: function(data) {
