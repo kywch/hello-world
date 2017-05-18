@@ -1160,7 +1160,7 @@ function generate_main_block(block_count, flag_feedback) {
                             "Use 'i', 'o', 'p' key to choose from the left, middle, and right option. " +
                             "If the key doesn't work, just press the same key multiple times. " +
                             debugProblemHTML(problem_current) + "</p>" +
-                            '<p class = center-block-text><br><br><br>' + next_string + '</p>' +
+                            '<p class = center-block-text><br><br>' + next_string + '</p>' +
                             '<p class = center-block-text>Press <strong>Enter</strong> or <strong>Space bar</strong> key to start the next trial.</p></div>';
                     } else if (curr_probcate == "word") {
                         return "<div class = centerbox>" + practice_warning + "<p class = block-text>Fill in the <font color=blue>blue box</font> " +
@@ -1169,7 +1169,7 @@ function generate_main_block(block_count, flag_feedback) {
                             "Use 'i', 'o', 'p' key to choose from the left, middle, and right letter. " +
                             "If the key doesn't work, just press the same key multiple times. " +
                             debugProblemHTML(problem_current) + "</p>" +
-                            '<p class = center-block-text><br><br><br>' + next_string + '</p>' +
+                            '<p class = center-block-text><br><br>' + next_string + '</p>' +
                             '<p class = center-block-text>Press <strong>Enter</strong> or <strong>Space bar</strong> key to start the next trial.</p></div>';
                     } else {
                         console.log("Error(main_feedback): unrecognizable curr_probcate.");
