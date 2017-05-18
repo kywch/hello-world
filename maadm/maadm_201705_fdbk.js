@@ -57,7 +57,7 @@ function save_data() {
         url: 'https://webtask-humanperflab.rhcloud.com/mturk/save_data.php', // this is the path to the above PHP script
         data: {
             sessid: eval("sbjId"),
-            taskid: 'maadm1705u',
+            taskid: 'maadm1705b',
             sess_data: jsPsych.data.dataAsJSON()
         }
     });
