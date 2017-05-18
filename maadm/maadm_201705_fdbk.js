@@ -6,12 +6,11 @@
 //var maadm_experiment = [];
 
 // generic task variables
-var flag_debug = false;
+var flag_debug = true;
 var time_psolve = 7000; // ms
 var time_choice = 3000; // ms
 var progress_bar =
     "<div class='progress_box'><div class='meter'> <span style='width: 100%'></span></div></div>";
-var block_finish_str = "start the next block.";
 var sbjId = "";
 
 // practice-related indices
@@ -58,7 +57,7 @@ function save_data() {
         url: 'https://webtask-humanperflab.rhcloud.com/mturk/save_data.php', // this is the path to the above PHP script
         data: {
             sessid: eval("sbjId"),
-            taskid: 'maadm1705',
+            taskid: 'maadm1705u',
             sess_data: jsPsych.data.dataAsJSON()
         }
     });
@@ -909,7 +908,7 @@ var solvetime_main = [];
 */
 if (flag_debug == false) {
     // not debugging -- actual setting: 6 blocks of 20 trials
-    var num_block = 6;
+    var num_block = 11;
 } else {
     // debugging
     var num_block = 2;
@@ -930,9 +929,21 @@ var enter_mainexp_page = {
         "<p class = center-block-text>Press <strong>Enter</strong> or <strong>Space bar</strong> key to start.</p></div>",
     timing_post_trial: 1000
 };
+
+var enter_nofdbkexp_page = {
+    type: "text",
+    cont_key: [13, 32], // space bar
+    text: "<div class = centerbox><p class = center-block-text>" +
+        "<font color=red><b>ATTENTION!</b></font> In the next five blocks, </p>" +
+        "<p class = center-block-text>We will <font color=red><b>NOT</b></font> let you know " +
+        "immediately whether you got the problem correct or not. " +
+        "Still, you will be informed of the total points you earned at the end of each block.</p>" +
+        "<p class = center-block-text>Press <strong>Enter</strong> or <strong>Space bar</strong> key to start.</p></div>",
+    timing_post_trial: 1000
+};
 //maadm_experiment.push(enter_mainexp_page);
 
-function generate_main_block(block_count) {
+function generate_main_block(block_count, flag_feedback) {
     // assume that option_main is defined
     var opt_list_name = "option_main[" + block_count.toString() + "]";
     var option_this = eval(opt_list_name);
@@ -946,6 +957,11 @@ function generate_main_block(block_count) {
             point_block = 0;
             correct_block = 0;
             curr_block = (block_count + 1);
+            let block_fdbk_str = "<p class = block-text><font color=red>In this block, " +
+                "we will NOT let you know immediately whether you got the problem correct or not.</font></p>";
+            if (flag_feedback) {
+                block_fdbk_str = "";
+            }
             return "<div class = centerbox><p class = block-text>" +
                 "<span class='very-large'>Main block " + curr_block.toString() + " / " + num_block.toString() + "</span></p>" +
                 "<p class = block-text>In this block, you will be presented with <b>" + option_this.length.toString() +
@@ -955,6 +971,7 @@ function generate_main_block(block_count) {
                 "so that you will perform at about 70% correct for both word and math problems. </p>" +
                 "<p class = block-text>Each choice must be made <b>within 3 seconds</b>, " +
                 "otherwise you will be automatically directed to the Easy problem with 1 point at stake.</p>" +
+                block_fdbk_str +
                 "<p class = block-text>The maximum points you can earn in this block is <b>80</b> points. </p>" +
                 "<p class = block-text>Press &quot;<b>o</b>&quot; key to begin a trial.</p>" +
                 "</div>";
@@ -1098,39 +1115,70 @@ function generate_main_block(block_count) {
             cont_key: [13, 32], // space bar
             timing_post_trial: 1000, // give a 1-sec break
             text: function() {
-                let feedback_string = "<span class='very-large'><br><font color='red'>Incorrect.</font></span>";
                 if (curr_correct) {
-                    feedback_string = "<span class='very-large'><br><font color='green'>Correct! (+" + curr_at_stake.toString() + ")</font></span>";
                     point_main += curr_at_stake;
                     point_block += curr_at_stake;
                 }
-                let score_string = "In this block, you earned " + point_block.toString() + " points and have " +
-                    (option_this.length - curr_main_hard - 1).toString() + " trials to go."
-                if (curr_probcate == "math") {
-                    return "<div class = centerbox>" + practice_warning + "<p class = block-text>Fill in the <font color=blue>blue box</font> " +
-                        "to make the equation correct within 7 seconds. " +
-                        "Use 'i', 'o', 'p' key to choose from the left, middle, and right option. " +
-                        "If the key doesn't work, just press the same key multiple times. " +
-                        debugProblemHTML(problem_current) + "</p>" +
-                        generateProblemHTML('math', problem_current, 'feedback') +
-                        '<p class = center-block-text>' + feedback_string + '</p>' +
-                        '<p class = center-block-text>' + score_string + '</p>' +
-                        '<p class = center-block-text>Press <strong>Enter</strong> or <strong>Space bar</strong> key to start the next trial.</p></div>';
-                } else if (curr_probcate == "word") {
-                    return "<div class = centerbox>" + practice_warning + "<p class = block-text>Fill in the <font color=blue>blue box</font> " +
-                        "to make a correct English word within 7 seconds. " +
-                        "Some letters were replaced with tildes (~) to make problems harder. " +
-                        "Use 'i', 'o', 'p' key to choose from the left, middle, and right letter. " +
-                        "If the key doesn't work, just press the same key multiple times. " +
-                        debugProblemHTML(problem_current) + "</p>" +
-                        generateProblemHTML('word', problem_current, 'feedback') +
-                        '<p class = center-block-text>' + feedback_string + '</p>' +
-                        '<p class = center-block-text>' + score_string + '</p>' +
-                        '<p class = center-block-text>Press <strong>Enter</strong> or <strong>Space bar</strong> key to start the next trial.</p></div>';
+                if (flag_feedback) {
+                    let feedback_string = "<span class='very-large'><br><font color='red'>Incorrect.</font></span>";
+                    if (curr_correct) {
+                        feedback_string = "<span class='very-large'><br><font color='green'>Correct! (+" + curr_at_stake.toString() + ")</font></span>";
+                    }
+                    let score_string = "In this block, you earned " + point_block.toString() + " points and have " +
+                        (option_this.length - curr_main_hard - 1).toString() + " trials to go."
+                    if (curr_probcate == "math") {
+                        return "<div class = centerbox>" + practice_warning + "<p class = block-text>Fill in the <font color=blue>blue box</font> " +
+                            "to make the equation correct within 7 seconds. " +
+                            "Use 'i', 'o', 'p' key to choose from the left, middle, and right option. " +
+                            "If the key doesn't work, just press the same key multiple times. " +
+                            debugProblemHTML(problem_current) + "</p>" +
+                            generateProblemHTML('math', problem_current, 'feedback') +
+                            '<p class = center-block-text>' + feedback_string + '</p>' +
+                            '<p class = center-block-text>' + score_string + '</p>' +
+                            '<p class = center-block-text>Press <strong>Enter</strong> or <strong>Space bar</strong> key to start the next trial.</p></div>';
+                    } else if (curr_probcate == "word") {
+                        return "<div class = centerbox>" + practice_warning + "<p class = block-text>Fill in the <font color=blue>blue box</font> " +
+                            "to make a correct English word within 7 seconds. " +
+                            "Some letters were replaced with tildes (~) to make problems harder. " +
+                            "Use 'i', 'o', 'p' key to choose from the left, middle, and right letter. " +
+                            "If the key doesn't work, just press the same key multiple times. " +
+                            debugProblemHTML(problem_current) + "</p>" +
+                            generateProblemHTML('word', problem_current, 'feedback') +
+                            '<p class = center-block-text>' + feedback_string + '</p>' +
+                            '<p class = center-block-text>' + score_string + '</p>' +
+                            '<p class = center-block-text>Press <strong>Enter</strong> or <strong>Space bar</strong> key to start the next trial.</p></div>';
+                    } else {
+                        console.log("Error(main_feedback): unrecognizable curr_probcate.");
+                        return "Error(main_feedback): unrecognizable curr_probcate.";
+                    }
+
                 } else {
-                    console.log("Error(main_feedback): unrecognizable curr_probcate.");
-                    return "Error(main_feedback): unrecognizable curr_probcate.";
+                    let next_string = "No feedback block. You have " + (option_this.length - curr_main_hard - 1).toString() + " trials to go."
+                    if (curr_probcate == "math") {
+                        return "<div class = centerbox>" + practice_warning + "<p class = block-text>Fill in the <font color=blue>blue box</font> " +
+                            "to make the equation correct within 7 seconds. " +
+                            "Use 'i', 'o', 'p' key to choose from the left, middle, and right option. " +
+                            "If the key doesn't work, just press the same key multiple times. " +
+                            debugProblemHTML(problem_current) + "</p>" +
+                            generateProblemHTML('math', problem_current) +
+                            '<p class = center-block-text><br>' + next_string + '</p>' +
+                            '<p class = center-block-text>Press <strong>Enter</strong> or <strong>Space bar</strong> key to start the next trial.</p></div>';
+                    } else if (curr_probcate == "word") {
+                        return "<div class = centerbox>" + practice_warning + "<p class = block-text>Fill in the <font color=blue>blue box</font> " +
+                            "to make a correct English word within 7 seconds. " +
+                            "Some letters were replaced with tildes (~) to make problems harder. " +
+                            "Use 'i', 'o', 'p' key to choose from the left, middle, and right letter. " +
+                            "If the key doesn't work, just press the same key multiple times. " +
+                            debugProblemHTML(problem_current) + "</p>" +
+                            generateProblemHTML('word', problem_current) +
+                            '<p class = center-block-text><br>' + next_string + '</p>' +
+                            '<p class = center-block-text>Press <strong>Enter</strong> or <strong>Space bar</strong> key to start the next trial.</p></div>';
+                    } else {
+                        console.log("Error(main_feedback): unrecognizable curr_probcate.");
+                        return "Error(main_feedback): unrecognizable curr_probcate.";
+                    }
                 }
+
             },
             data: function() {
                 if (curr_correct) {
@@ -1179,6 +1227,7 @@ function generate_main_block(block_count) {
         type: "text",
         cont_key: [13, 32], // space bar
         text: function() {
+            let block_finish_str = "start the next block.";
             if (num_block == curr_block) {
                 block_finish_str = "finish the task.";
             }
