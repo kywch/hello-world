@@ -651,7 +651,7 @@ var end_block = {
         exp_id: 'perceptual_metacognition'
     },
     timing_response: 180000,
-    text: '<div class = cntexpbox><p class = center-block-text>This task is done.</p><p class = center-block-text>Press <strong>enter</strong> to continue.</p></div>',
+    text: '<div class = cntexpbox><p class = center-block-text>You have completed this task.</p><p class = center-block-text>Press <strong>enter</strong> to continue.</p></div>',
     cont_key: [13],
     timing_post_trial: 0,
     on_finish: assessPerformance
