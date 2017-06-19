@@ -2,7 +2,7 @@
 /* Define helper functions */
 /* ************************************ */
 
-var flag_debug = true;
+var flag_debug = false;
 
 function assessPerformance() {
     /* Function to calculate the "credit_var", which is a boolean used to
