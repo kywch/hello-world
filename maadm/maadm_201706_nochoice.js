@@ -645,8 +645,8 @@ var choice_instruct_page = {
     cont_key: "p",
     text: "<div class = centerbox>" +
         "<p class = block-text>In each trial of the choose-and-solve task, " +
-        "you will be provided two options to solve an easy problem with low reward " +
-        "and a hard problem with high reward. In the example shown below, 2 and 6 " +
+        "you will be provided the option of choosing to solve an easy or hard problem, " +
+        "each with it's own reward level. In the example shown below, 2 and 6 " +
         "are the points at stake for the easy and hard problems, respectively.</p> " +
         "<p class = block-text>You should choose what type of problem you want to solve " +
         "otherwise you will be automatically directed to the easy problem with 1 point at stake. " +
@@ -1313,9 +1313,9 @@ var nochoice_instruct_page = {
         "in which you will be provided only one option. In the example shown below, " +
         "5 is the points at skate for solving the easy word problem. </p>" +
         "<p class = block-text>You should indicate where the option is presented by pressing " +
-        "the left or right key, otherwise you will be automatically directed to the easy problem " +
-        "with 1 point at stake. Then, you will be presented with the problem, and " +
-        "you will earn the points if you get the problem correct.</p>" +
+        "the left or right key. If you fail to press the key within 3 seconds, you will be " + 
+        "directed to the easy problem with 1 point at stake. Then, you will be presented with " + 
+        "the problem, and you will earn the points if you get the problem correct.</p>" +
         "<p class = block-text>Press &quot;<b>i</b>&quot; key for the left option " +
         "and &quot;<b>p</b>&quot; key for the right option.</p>" +
         "<p class = block-text>To continue, please indicate where the option is presented.</p>" +
