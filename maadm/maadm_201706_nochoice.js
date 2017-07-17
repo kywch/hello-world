@@ -1313,12 +1313,12 @@ var nochoice_instruct_page = {
         "in which you will be provided only one option. In the example shown below, " +
         "5 is the points at skate for solving the easy word problem. </p>" +
         "<p class = block-text>You should accept the option by indicating " + 
-        "where the option is presented by pressing the left or right key within 3 seconds. " + 
+        "where the option is presented using the left or right key within 3 seconds. " + 
         "You will earn the points if you get the problem correct.</p>" +
         "<p class = block-text>If you do not accept the option within 3 seconds, " + 
         "you will be directed to an easy problem with 1 point at stake. </p>" +
-        "<p class = block-text>Press &quot;<b>i</b>&quot; key for the left option " +
-        "and &quot;<b>p</b>&quot; key for the right option.</p>" +
+        "<p class = block-text>Press &quot;<b>i</b>&quot; key for left " +
+        "and &quot;<b>p</b>&quot; key for right.</p>" +
         "<p class = block-text>To continue, please indicate where the option is presented.</p>" +
         generateChoiceHTML(nochoice_instruct_option) + "</div>",
     timing_post_trial: 1000
