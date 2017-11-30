@@ -6,7 +6,7 @@
 //var maadm_experiment = [];
 
 // generic task variables
-var flag_debug = false;
+var flag_debug = true;
 var time_psolve = 7000; // ms
 var time_choice = 3000; // ms
 var progress_bar =
